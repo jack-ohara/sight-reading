@@ -89,7 +89,7 @@
 
 <div class="container">
 	<div class="pitchContainer">
-		<h1>Pitch: {pitch}</h1>
+		<h1>Pitch: {pitch.toFixed(2)}Hz</h1>
 	</div>
 
 	<button on:click={toggleRecord}>{record ? 'Stop' : 'Start'} recording</button>
