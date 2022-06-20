@@ -2,9 +2,10 @@
 	let pitch = 0
 	let record = false
 	let rawPitches: number[] = []
+    let stream: MediaStream;
 
 	const recordPitch = async () => {
-		const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+		stream = await navigator.mediaDevices.getUserMedia({ audio: true })
 
 		const audioContext = new AudioContext()
 		const analyser = audioContext.createAnalyser()
@@ -75,6 +76,7 @@
 	function toggleRecord() {
 		if (record) {
 			record = false
+            stream.getTracks().forEach(t => t.stop())
 			return
 		}
 
@@ -94,13 +96,27 @@
 </div>
 
 <style>
+	:global(body) {
+		margin: 0;
+	}
+	:global(*) {
+		box-sizing: border-box;
+	}
+
 	.container {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		height: 98vh;
+		height: 100vh;
 		justify-content: space-between;
+		padding: 1rem;
 	}
+
+    @supports (height: 100dvh) {
+        .container {
+            height: 100dvh;
+        }
+    }
 
 	.container .pitchContainer {
 		display: flex;
