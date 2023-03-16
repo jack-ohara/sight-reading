@@ -4,8 +4,6 @@
   import RandomNote from "../components/MusicalNote.svelte";
   import { getRandomNote, type Note } from "../utils/getRandomNote";
 
-  let lastNote: number;
-
   let randomNote: Note = getRandomNote();
 
   type MidiMessage = {
@@ -17,8 +15,8 @@
     const velocity = midiMessage.data[2];
 
     if (velocity > 0 && commandType >= 144 && commandType <= 159) {
-      lastNote = midiMessage.data[1];
-      if (lastNote === randomNote.midiValue) {
+      const notePlayedMidiValue = midiMessage.data[1];
+      if (notePlayedMidiValue === randomNote.midiValue) {
         randomNote = getRandomNote(randomNote);
       }
     }
@@ -47,11 +45,3 @@
 {#key randomNote}
   <RandomNote note={randomNote} />
 {/key}
-
-{#if lastNote}
-  <h3>Note value: <span>{lastNote}</span></h3>
-{/if}
-
-{#if lastNote === randomNote.midiValue}
-  <strong>That's correct!</strong>
-{/if}
