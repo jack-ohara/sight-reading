@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { Formatter, Renderer, Stave, StaveNote, Voice } from "vexflow";
-  import type { Note } from "../utils/getRandomNote";
+  import type { Note } from "../utils/musicalNotes";
 
   export let note: Note;
   let output: HTMLDivElement;
@@ -12,14 +12,14 @@
     const renderer = new Renderer(output, Renderer.Backends.SVG);
 
     // Configure the rendering context.
-    renderer.resize(111, 100);
+    renderer.resize(205, 200);
     const context = renderer.getContext();
+    context.scale(2, 2);
 
-    // Create a stave of width 400 at position 10, 40 on the canvas.
-    const stave = new Stave(10, 0, 100);
+    const stave = new Stave(0, 0, 100);
 
     // Add a clef and time signature.
-    stave.addClef(noteToDraw.stave);
+    stave.addClef(noteToDraw.clef);
 
     // Connect it to the rendering context and draw!
     stave.setContext(context).draw();
@@ -27,7 +27,11 @@
     // Create the notes
     const notes = [
       // A quarter-note C.
-      new StaveNote({ keys: [noteToDraw.easyScoreValue], duration: "q" }),
+      new StaveNote({
+        keys: [noteToDraw.easyScoreValue],
+        duration: "q",
+        clef: noteToDraw.clef,
+      }),
     ];
 
     // Create a voice in 4/4 and add above notes

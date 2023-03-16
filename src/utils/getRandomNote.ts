@@ -1,23 +1,11 @@
-export type Note = {
-  easyScoreValue: string;
-  midiValue: number;
-  stave: "treble" | "bass";
-};
+import type { Note } from "./musicalNotes";
 
-const notes: Note[] = [
-  { easyScoreValue: "c/4", midiValue: 60, stave: "treble" },
-  { easyScoreValue: "d/4", midiValue: 62, stave: "treble" },
-  { easyScoreValue: "e/4", midiValue: 64, stave: "treble" },
-  { easyScoreValue: "f/4", midiValue: 65, stave: "treble" },
-  { easyScoreValue: "g/4", midiValue: 67, stave: "treble" },
-];
-
-export function getRandomNote(previousNote?: Note): Note {
+export function getRandomNote(notes: Note[], previousNote?: Note): Note {
   const nextNote = notes[Math.floor(Math.random() * notes.length)];
 
   if (!previousNote) return nextNote;
 
   return nextNote.midiValue === previousNote.midiValue
-    ? getRandomNote(previousNote)
+    ? getRandomNote(notes, previousNote)
     : nextNote;
 }
