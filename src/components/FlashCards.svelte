@@ -10,10 +10,14 @@
   let totalNotes = -1;
   let totalCorrect = 0;
   let correctPercentage = 100;
+  let previousNoteCorrect: boolean | undefined;
 
   const lastPlayNoteUnsub = lastPlayedNote.subscribe((val) => {
     if (val === randomNote.midiValue) {
+      previousNoteCorrect = true;
       totalCorrect++;
+    } else if (totalNotes > 0) {
+      previousNoteCorrect = false;
     }
 
     totalNotes++;
@@ -29,8 +33,14 @@
 
 <div class="container">
   <header>
-    <div>
-      <span>Correct</span>
+    <div
+      class={previousNoteCorrect === undefined
+        ? ""
+        : previousNoteCorrect
+        ? "green"
+        : "red"}
+    >
+      <span>Correct:</span>
       <span>{totalCorrect}/{totalNotes} {correctPercentage}%</span>
     </div>
   </header>
@@ -53,5 +63,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  header > div.green {
+    color: green;
+  }
+
+  header > div.red {
+    color: firebrick;
   }
 </style>
