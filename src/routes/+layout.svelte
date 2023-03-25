@@ -45,8 +45,11 @@
       "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
       "Noto Color Emoji";
     max-width: 680px;
-    margin: 0 auto;
+    margin: 0;
     background: #fff;
     color: #333;
+  }
+  :global(*) {
+    box-sizing: border-box;
   }
 </style>
