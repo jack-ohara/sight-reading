@@ -7,17 +7,33 @@
 
   export let notes: Note[];
   let randomNote: Note = getRandomNote(notes);
+  let totalNotes = -1;
+  let totalCorrect = 0;
+  let correctPercentage = 100;
 
   const lastPlayNoteUnsub = lastPlayedNote.subscribe((val) => {
     if (val === randomNote.midiValue) {
-      randomNote = getRandomNote(notes, randomNote);
+      totalCorrect++;
     }
+
+    totalNotes++;
+    correctPercentage =
+      totalCorrect === totalNotes
+        ? 100
+        : Math.round((totalCorrect / totalNotes) * 100);
+    randomNote = getRandomNote(notes, randomNote);
   });
 
   onDestroy(lastPlayNoteUnsub);
 </script>
 
 <div class="container">
+  <header>
+    <div>
+      <span>Correct</span>
+      <span>{totalCorrect}/{totalNotes} {correctPercentage}%</span>
+    </div>
+  </header>
   {#key randomNote}
     <MusicalNote note={randomNote} />
   {/key}
@@ -27,5 +43,15 @@
   .container {
     width: 100vw;
     height: 100vh;
+  }
+
+  header {
+    padding: 1em;
+  }
+
+  header > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 </style>
