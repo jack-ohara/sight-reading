@@ -5,6 +5,7 @@ export type Note = {
 };
 
 export const basicRightHandNotes: Note[] = [
+  { easyScoreValue: "b/3", midiValue: 59, clef: "treble" },
   { easyScoreValue: "c/4", midiValue: 60, clef: "treble" },
   { easyScoreValue: "d/4", midiValue: 62, clef: "treble" },
   { easyScoreValue: "e/4", midiValue: 64, clef: "treble" },
@@ -13,6 +14,7 @@ export const basicRightHandNotes: Note[] = [
 ];
 
 export const basicLeftHandNotes: Note[] = [
+  { easyScoreValue: "b/2", midiValue: 47, clef: "bass" },
   { easyScoreValue: "c/3", midiValue: 48, clef: "bass" },
   { easyScoreValue: "d/3", midiValue: 50, clef: "bass" },
   { easyScoreValue: "e/3", midiValue: 52, clef: "bass" },
